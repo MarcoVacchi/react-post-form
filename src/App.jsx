@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-// - author (string) - L’autore del post
-// - title (string) - Il titolo del post
-// - body (string) - Il testo del post
-// - public (boolean) - Se il post deve essere pubblico (true) o una bozza (false)
-
 function App() {
 
   const [formData, setFormData] = useState({
@@ -26,12 +21,18 @@ function App() {
     }));
   };
 
-  console.log(formData)
+  function savePost(event) {
+    event.preventDefault();
+    //  const newPost = [...formData, newPost];
+    console.log(formData)
+
+  }
+
 
   return (
     <>
       <div className='container'>
-        <form>
+        <form onSubmit={savePost}>
           <div className="mb-3">
             <label className="form-label">Author</label>
             <input type="text"
