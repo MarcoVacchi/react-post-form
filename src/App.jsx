@@ -3,12 +3,16 @@ import axios from 'axios';
 
 function App() {
 
+  const endPoint = ('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts');
+
   const [formData, setFormData] = useState({
     author: '',
     title: '',
     body: '',
     public: false
-  })
+  });
+
+  const [alert, setAlert] = useState({ type: '', message: '', alert: '' });
 
   function handleFormData(event) {
     const value =
@@ -23,15 +27,35 @@ function App() {
 
   function savePost(event) {
     event.preventDefault();
-    //  const newPost = [...formData, newPost];
-    console.log(formData)
+    console.log(formData);
 
+    axios.post(endPoint, formData)
+      .then(res => {
+        console.log(res.data);
+        setAlert({
+          type: 'success',
+          message: 'Form inviato con successo!',
+          alert: 'Form inviato con successo!'
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        setAlert({
+          type: 'danger',
+          message: 'Invio form non riuscito!',
+          alert: 'Form non inviato con successo!'
+        });
+      });
   }
-
 
   return (
     <>
       <div className='container'>
+        {alert.message && (
+          <div className={`alert alert-${alert.type}`}>
+            {alert.message}
+          </div>
+        )}
         <form onSubmit={savePost}>
           <div className="mb-3">
             <label className="form-label">Author</label>
